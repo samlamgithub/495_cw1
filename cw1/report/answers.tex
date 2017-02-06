@@ -18,6 +18,130 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% Main document
+
+\section{Introduction}
+This is a template for coursework submission. Many macros and definitions can be found in \texttt{notation.tex}. This document is not an introduction to LaTeX. General advice if get stuck: Use your favorite search engine. A great source is also \mbox{\url{https://en.wikibooks.org/wiki/LaTeX}}.
+
+\section{Basics}
+
+\subsection{Figures}
+A figure can be included as follows:
+\begin{figure}[tb]
+\centering % this centers the figure
+\includegraphics[width = 0.7\hsize]{./figures/imperial} % this includes the figure and specifies that it should span 0.7 times the horizontal size of the page
+\caption{This is a figure.} % caption of the figure
+\label{fig:imperial figure} % a label. When we refer to this label from the text, the figure number is included automatically
+\end{figure}
+Fig.~\ref{fig:imperial figure} shows the Imperial College logo. 
+
+Some guidelines:
+\begin{itemize}
+\item Always use vector graphics (scale free)
+\item In graphs, label the axes
+\item Make sure the font size (labels, axes) is sufficiently large
+\item When using colors, avoid red and green together (color blindness)
+\item Use different line styles (solid, dashed, dotted etc.) and different markers to make it easier to distinguish between lines
+\end{itemize}
+
+\subsection{Notation}
+\begin{table}[tb]
+\caption{Notation}
+\label{tab:notation}
+\centering
+\begin{tabular}{ll}
+Scalars & $x$\\
+Vectors & $\vec x$\\
+Matrices & $\mat X$\\
+Transpose & $\T$\\
+Inverse & $\inv$\\
+Real numbers & $\R$\\
+Expected values & $\E$\\
+\end{tabular}
+\end{table}
+Table~\ref{tab:notation} lists some notation with some useful shortcuts (see latex source code).
+
+\subsubsection{Equations}
+Here are a few guidelines regarding equations
+\begin{itemize}
+\item Please use the \texttt{align} environment for equations (\texttt{eqnarray} is buggy)
+\item Please number all equations: It will make things easier when we need to refer to equation numbers. If you always use the \texttt{align} environment, equations are numbered by default.
+\item Vectors are by default column vectors, and we write 
+\begin{align}
+\vec x &= \colvec{1,2}
+\end{align}
+\item Note that the same macro (\texttt{$\backslash$colvec}) can produce vectors of variable lengths, as
+\begin{align}
+\vec y &= \colvec{1,2,3,4}
+\end{align}
+\item Matrices can be created with the same command. The \& switches to the next column:
+\begin{align}
+\mat A = \begin{bmatrix}
+1 & 2 & 3\\
+3 & 4 & 5
+\end{bmatrix}
+\end{align}
+\item Determinants. We provide a simple macro (\texttt{$\backslash$matdet}) whose argument is just a matrix array:
+\begin{align}
+\matdet{
+1 & 2 & 3\\
+3 & 4 & 5\\
+2 & 2 & 2
+}
+\end{align}
+\item If you do longer manipulations, please explain what you are doing: Try to avoid sequences of equations without text breaking up. Here is an example:
+We consider
+\begin{align}
+U_1 = [\colvec{1,1,0,0},\, \colvec{0,1,1,0},\, \colvec{0,0,1,1}]
+\subset\R^4, \quad 
+U_2 = [\colvec{-1,1,2,0},\, \colvec{0,1,0,0}]
+\subset\R^4\,.
+\end{align}
+To find a basis of $U_1\cap U_2$, we need to find all $\vec x \in V$ that can be represented as linear combinations of the basis vectors of $U_1$ and $U_2$, i.e., 
+\begin{align}
+\sum_{i=1}^3 \lambda_i \vec b_i = \vec x = \sum_{j=1}^2 \psi_j \vec c_j\,,
+\end{align}
+where $\vec b_i$ and $\vec c_j$ are the basis vectors of $U_1$ and $U_2$, respectively.
+%
+The matrix $\mat A = [\vec b_1|\vec b_2|\vec b_3| -\vec c_1|-\vec
+c_2]$ is given as
+\begin{align}
+\mat A = 
+\begin{bmatrix}
+1 & 0 & 0 & 1 & 0\\
+1 & 1 & 0 & -1 & -1\\
+0 & 1 & 1 & -2 & 0\\
+0 & 0 & 1 & 0 & 0
+\end{bmatrix}\,.
+\end{align}
+By using Gaussian elimination, we determine the corresponding reduced row echelon form 
+\begin{align}
+\begin{bmatrix}
+1 & 0 & 0 & 1& 0\\
+0 & 1 & 0 & -2 & 0\\
+0 & 0 & 1 & 0 & 0\\
+0 & 0 & 0 & 0 & 1
+\end{bmatrix}
+\,.
+\end{align}
+We keep in mind that we are interested in finding $\lambda_1,\lambda_2,\lambda_3\in\R$ and/or $\psi_1,\psi_2\in\R$ with 
+\begin{align}
+\begin{bmatrix}
+1 & 0 & 0 & 1& 0\\
+0 & 1 & 0 & -2 & 0\\
+0 & 0 & 1 & 0 & 0\\
+0 & 0 & 0 & 0 & 1
+\end{bmatrix}
+\colvec{\lambda_1, \lambda_2, \lambda_3, \psi_1, \psi_2}
+=\vec 0\,.
+\end{align}
+From here, we can immediately see that $\psi_2=0$ and $\psi_1\in\R$ is
+a free variable since it corresponds to a non-pivot column, and our solution is 
+\begin{align}
+U_1\cap U_2 = \psi_1\vec c_1 =  [ \colvec{-1,1,2,0} ]
+\,, \quad \psi_1\in\R\,.
+\end{align}
+\end{itemize}
+
 \section{Exercise I}
 \renewcommand{\thesubsection}{\thesection.\alph{subsection}}
 \subsection{}
@@ -27,17 +151,102 @@ fdss
 \item
 fsds
 \end{enumerate}
+
+
+
 \section{Exercise II}
-
-
-
-
-
-
-
-
-
-
+In Gaussian Mixture Models, assume given a set of $N$ unlablled data, there $K$ gaussian distributed clustered with different centers $\mu_1 ... \mu_k$ and same covariance matrix $\Sigma$. The probability of a data belong in cluster $l$ is $p(k = l) = \pi_l$.
+So we have our parameters:\\
+\begin{align}
+  & \Sigma  \\
+  & \mu_i ... \mu_k  \\
+  & p(k=1) ... p(k=K)
+\end{align}
+And hidden variables:
+\begin{align}
+ \vec{Z}_n &= \colvec{Z_{n1},Z_{n2},...,Z_{nk}} = [\colvec{1,0,0,...,0},\, \colvec{0,1,0,...,0},\,\colvec{...},\,\colvec{0,0,0,...,1}]
+\end{align}
+where the probability of a sample in clusters is
+\begin{align}
+p(\vec{Z}_n) = \prod_{k=1}^{K} \pi_k^{Z_{nk}}
+\end{align}
+and the probability of a sample $x_n$ given a cluster $k$ is
+\begin{align}
+p(x_n | Z_{nk} =1, \theta) = N(X_n, \mu_k, \Sigma) 
+\end{align}
+and the probability of a sample $x_n$ is
+\begin{align}
+p(x_n | \theta) = \sum_{k=1}^{K} p(Z_{nk} = 1)p(X_n | Z_{nk} = 1, \theta) = \sum_{k=1}^{K} \pi_k N(X_n | \mu_k, \Sigma)
+\end{align}
+Assume all data samples are independent, we first formulate the joint likelihood
+\begin{align}
+p(X, Z | \theta) = p(x_1, x_2, ..., x_n, z_1, z_2, ..., z_n | \theta)\\
+ = \prod_{n=1}^{N} p(x_n|z_n, \theta_x) \prod_{n=1}^{N} p(z_n|\theta_z) \\
+ =  \prod_{n=1}^{N} \prod_{k=1}^{K} N(x_n|\mu_k, \Sigma)^{z_{nk}} \prod_{n=1}^{N}  \prod_{k=1}^{K} \pi_k^{z_{nk}}
+\end{align}
+where the parameters are
+\begin{align}
+\theta_x &= {\Sigma, \mu_1, \mu_2, ..., \mu_k} \\
+\theta_z &= {\pi_1, \pi_2, ..., \pi_k}
+\end{align}
+In the Expectation Step, we take the log of likelihood
+\begin{align}
+\ln p(X, Z|\theta) =  \sum_{n=1}^{N} \sum_{k=1}^{K} z_{nk} \left\lbrace\ln N(X_n | \mu_k, \Sigma) + \ln \pi_k \right\rbrace
+\end{align}
+And then apply the operator $E_{p(Z|X,\theta)}$ which is expectation of the posterior:
+\begin{align}
+E_{p(Z|X,\theta)} [\ln p(X, Z|\theta)] = \sum_{n=1}^{N} \sum_{k=1}^{K} E_{p(Z|X,\theta)} [Z_{nk}] \left\lbrace\ln N(X_n | \mu_k, \Sigma) + \ln \pi_k \right\rbrace
+\end{align}
+Now we need to compute $E_{p(Z|X,\theta)} [Z_{nk}]$:
+\begin{align}
+E_{p(Z|X,\theta)} [Z_{nk}] = E_{p(Z|X,\theta)} [Z_{nk}] \\
+= \sum_{z_1}... \sum_{z_n} p(Z|X, \theta_{old}) = \sum_{z_n} z_{nk} p(z_n|x_n, \theta^{old})
+\end{align}
+where
+\begin{align}
+p(z_n|x_n, \theta^{old}) = \frac{p(x_n, z_n | \theta^{old})}{p(x_n|\theta^{old})} \\
+=  \frac{p(x_n |z_n, \theta^{old})p(z_n|\theta^{old})}{p(x_n|\theta^{old})}\\
+= \frac{\prod_{k=1}^{K}N(x_n|\mu_k, \Sigma)^{z_{nk}}{pi_k}^{z_{nk}}}{\sum_{z_n}\prod_{k=1}^{K} N(x_n|\mu_k, \Sigma)^{z_{nk}}\pi_k^{z_{nk}}}
+\end{align}
+which gives the expectation
+\begin{align}
+E_{p(Z|X,\theta)} [Z_{nk}] = \frac{\sum_{z_nk} z_{nk} \prod_{k=1}^{K}N(x_n|\mu_k, \Sigma)^{z_{nk}}{pi_k}^{z_{nk}}}{\sum_{z_n}\prod_{k=1}^{K} N(x_n|\mu_k, \Sigma)^{z_{nk}}\pi_k^{z_{nk}}} \\
+= \frac{\pi_k N(x_n|\mu_k, \Sigma)}{\sum_{l=1}^{K} \pi_l N(x_n|\mu_l, \Sigma)}
+\end{align}
+now we see that the expectation is the posterior
+\begin{align}
+E_{p(Z|X,\theta)} [Z_{nk}] = p(z_{nk}|x_n)
+\end{align}
+now in the maximization step, we can define
+\begin{align}
+G(\theta) = E_{p(Z|X,\theta)} [\ln p(X, Z|\theta)] = \\
+\sum_{n=1}^{N} \sum_{k=1}^{K} E_{p(Z|X,\theta)} [Z_{nk}] \left\lbrace\ln N(X_n | \mu_k, \Sigma) + \ln \pi_k \right\rbrace =\\
+\sum_{n=1}^{N} \sum_{k=1}^{K} \gamma(z_{nk}) \left\lbrace -\frac{1}{2}(x_n - \mu_k)^T \Sigma^{-1}(x_n - \mu_k) -\frac{1}{2}(F\ln 2\pi + \ln |\Sigma |) + \ln \pi_k  \right\rbrace
+\end{align}
+take the derivative of our cost function with respect to our parameters, and set them to zero:
+\begin{align}
+\frac{d G(\theta)}{d \mu_k} = \sum_{n=1}^N  \gamma(z_{nk})\Sigma^{-1}(x_n - \mu_k) = 0 \\
+\mu_k = \frac{\sum_{n=1}^N  \gamma(z_{nk}) x_n}{\sum_{n=1}^N  \gamma(z_{nk})}\\
+\frac{d G(\theta)}{d \Sigma} = \sum_{n=1}^{N} \sum_{k=1}^{K} \gamma(z_{nk})\left\lbrace (x_n - \mu_k)^T (x_n - \mu_k) - \Sigma \right\rbrace = 0\\
+\Sigma = \frac{\sum_{n=1}^{N} \sum_{k=1}^{K} \gamma(z_{nk})(x_n - \mu_k)^T (x_n - \mu_k) }{\sum_{n=1}^{N} \sum_{k=1}^{K} \gamma(z_{nk})} \\
+= \sum_{n=1}^{N} \sum_{k=1}^{K} \gamma(z_{nk})(x_n - \mu_k)^T (x_n - \mu_k) 
+\end{align}
+Since we have the constraint that
+\begin{align}
+\sum_{k=1}^K \pi_k = 1
+\end{align}
+We can define the laplacian function:
+\begin{align}
+L(\theta) = G(\theta) - \lambda (\sum_{k=1}^K \pi_k - 1) \\
+\frac{d L(\theta)}{d \pi_k} = \sum_{n=1}^N \frac{\gamma(z_{nk})}{\pi_k} - \lambda = 0\\
+\pi_k = \frac{\sum_{n-1}^N \gamma(z_{nk})}{\lambda}\\
+\end{align}
+Using the constraint, we can derive the value of $\lambda$
+\begin{align}
+\sum_{k=1}^K \pi_k = 1 = \frac{\sum_{n=1}^{N} \sum_{k=1}^{K} \gamma(z_{nk}) }{\lambda}\\
+\lambda = \sum_{n=1}^{N} \sum_{k=1}^{K} \gamma(z_{nk}) = N\\
+\pi_k = \frac{\sum_{n=1}^{N} \gamma(z_{nk})}{N}
+\end{align}
 
 
 \end{document}
